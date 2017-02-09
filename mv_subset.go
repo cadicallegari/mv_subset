@@ -31,7 +31,7 @@ func moveRandomly(source string, dest string, amount int) error {
 		return errors.New("There is no enough files to move")
 	}
 
-	randons := rand.Perm(len(source))
+	randons := rand.Perm(len(files))
 
 	for i := 0; i < amount; i++ {
 		randomFile := files[randons[i]]
