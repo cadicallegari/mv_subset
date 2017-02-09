@@ -34,6 +34,12 @@ func createTempFiles(dir string, size int) {
 	}
 }
 
+func check(t *testing.T, err error) {
+	if err != nil {
+		t.Errorf("Unexpected error: %v", err)
+	}
+}
+
 func TestMoveFiles(t *testing.T) {
 	total := 100
 	toMove := 10
@@ -46,11 +52,15 @@ func TestMoveFiles(t *testing.T) {
 		fatal(err)
 	}
 
-	if toMove != len(listFiles(destDir)) {
+	destFiles, err := listFiles(destDir)
+	check(t, err)
+	if toMove != len(destFiles) {
 		t.Errorf("files note copied to destination")
 	}
 
-	if (total - toMove) != len(listFiles(sourceDir)) {
+	sourceFiles, err := listFiles(sourceDir)
+	check(t, err)
+	if (total - toMove) != len(sourceFiles) {
 		t.Errorf("files note moved to source from destination")
 	}
 }
