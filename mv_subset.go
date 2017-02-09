@@ -1,6 +1,7 @@
 package main
 
 import (
+	"errors"
 	"fmt"
 	"io/ioutil"
 	"math/rand"
@@ -35,6 +36,10 @@ func listFiles(dir string) []os.FileInfo {
 
 func moveRandomly(source string, dest string, amount int) error {
 	files := listFiles(source)
+
+	if len(files) < amount {
+		return errors.New("There is no enough files to move")
+	}
 
 	randons := rand.Perm(len(source))
 
