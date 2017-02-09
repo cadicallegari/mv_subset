@@ -34,15 +34,6 @@ func createTempFiles(dir string, size int) {
 	}
 }
 
-func countFiles(dir string) int {
-	files, err := ioutil.ReadDir(dir)
-	if err != nil {
-		fatal(err)
-	}
-
-	return len(files)
-}
-
 func TestMoveFiles(t *testing.T) {
 	total := 100
 	toMove := 10
@@ -55,11 +46,11 @@ func TestMoveFiles(t *testing.T) {
 		fatal(err)
 	}
 
-	if toMove != countFiles(destDir) {
+	if toMove != len(listFiles(destDir)) {
 		t.Errorf("files note copied to destination")
 	}
 
-	if (total - toMove) != countFiles(sourceDir) {
+	if (total - toMove) != len(listFiles(sourceDir)) {
 		t.Errorf("files note moved to source from destination")
 	}
 }
